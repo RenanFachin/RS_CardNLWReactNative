@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Camera } from 'expo-camera';
+import { Camera, CameraType } from 'expo-camera';
 import { Image, SafeAreaView, ScrollView, TextInput, View } from 'react-native';
 
 import { Header } from '../components/Header';
@@ -38,7 +38,8 @@ export function Home() {
               // CASO hasCameraPermission seja true = <Camera />
               hasCameraPermission ? 
                 <Camera 
-                  style={styles.camera} 
+                  style={styles.camera}
+                  type={CameraType.front} 
                 /> : 
               // Caso não tenha a permissão (False) do uso da câmera será utilizada uma imagem default
               <Image source={{ uri: 'https://images.gutefrage.net/media/fragen/bilder/meine-kamera-auf-windows-10-funktioniert-nicht-was-tun/0_big.jpg?v=1584606917000' }} style={styles.camera} />
