@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Camera, CameraType } from 'expo-camera';
 import { Image, SafeAreaView, ScrollView, TextInput, View } from 'react-native';
 
@@ -12,9 +12,20 @@ import { POSITIONS, PositionProps } from '../utils/positions';
 export function Home() {
   // Criando um estado para verificar se o usuário deu a permissão para utilizar a câmera
   const [hasCameraPermission, setHasCameraPermission] = useState(false)
+  // Criando um estado para armazenar a foto
+  const [photoURI, setPhotoURI] = useState<null | string>(null)
 
   const [positionSelected, setPositionSelected] = useState<PositionProps>(POSITIONS[0]);
 
+  const cameraRef = useRef<Camera>(null)
+
+  // Criando função assíncrona para tirar a foto
+  async function handleTakePicture(){
+    const photo = await cameraRef.current.takePictureAsync()
+
+    // Guardando a foto do usuário
+    setPhotoURI(photo.uri)
+  }
 
   useEffect(() => {
     // Solicitando ao usuário a permissão para utilizar a câmera
@@ -35,14 +46,15 @@ export function Home() {
           <View style={styles.picture}>
 
             {
-              // CASO hasCameraPermission seja true = <Camera />
-              hasCameraPermission ? 
+              // CASO hasCameraPermission seja true = <Camera /> e caso não haja uma foto salva no estado
+              hasCameraPermission  && !photoURI ? 
                 <Camera 
+                  ref={cameraRef}
                   style={styles.camera}
                   type={CameraType.front} 
                 /> : 
               // Caso não tenha a permissão (False) do uso da câmera será utilizada uma imagem default
-              <Image source={{ uri: 'https://images.gutefrage.net/media/fragen/bilder/meine-kamera-auf-windows-10-funktioniert-nicht-was-tun/0_big.jpg?v=1584606917000' }} style={styles.camera} />
+              <Image source={{ uri: photoURI ? photoURI : 'https://images.gutefrage.net/media/fragen/bilder/meine-kamera-auf-windows-10-funktioniert-nicht-was-tun/0_big.jpg?v=1584606917000' }} style={styles.camera} />
             }
 
             <View style={styles.player}>
@@ -59,7 +71,7 @@ export function Home() {
           positionSelected={positionSelected}
         />
 
-        <Button title="Compartilhar" />
+        <Button title="Compartilhar" onPress={handleTakePicture} />
       </ScrollView>
     </SafeAreaView>
   );
