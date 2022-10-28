@@ -31,5 +31,8 @@ export const styles = StyleSheet.create({
     fontWeight: '900',
     color: '#000',
     textTransform: 'uppercase'
+  },
+  sticker: {
+    backgroundColor: '#373D98',
   }
 });

@@ -53,7 +53,7 @@ export function Home() {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
-        <View ref={screenShotRef}>
+        <View ref={screenShotRef} style={styles.sticker}>
           <Header position={positionSelected} />
 
           <View style={styles.picture}>
