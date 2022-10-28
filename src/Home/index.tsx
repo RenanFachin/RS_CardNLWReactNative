@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { Camera, CameraType } from 'expo-camera';
 import { Image, SafeAreaView, ScrollView, TextInput, View } from 'react-native';
+import { captureRef } from 'react-native-view-shot'
+import * as Sharing from 'expo-sharing'
 
 import { Header } from '../components/Header';
 import { Button } from '../components/Button';
@@ -19,6 +21,9 @@ export function Home() {
 
   const cameraRef = useRef<Camera>(null)
 
+  // screenShotRef vai ser a região que será feita a screenShot da tela
+  const screenShotRef = useRef(null)
+
   // Criando função assíncrona para tirar a foto
   async function handleTakePicture(){
     const photo = await cameraRef.current.takePictureAsync()
@@ -28,7 +33,11 @@ export function Home() {
   }
 
   async function shareScreenShot(){
+    // Passando para o captureRef a região que precisa ser capturada
+    const screenShot = await captureRef(screenShotRef)
 
+    // Compartilhando com o sharing
+    await Sharing.shareAsync("file:/" + screenShot)
   }
 
   useEffect(() => {
@@ -44,7 +53,7 @@ export function Home() {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
-        <View>
+        <View ref={screenShotRef}>
           <Header position={positionSelected} />
 
           <View style={styles.picture}>
