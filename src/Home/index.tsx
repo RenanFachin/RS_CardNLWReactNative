@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Camera, CameraType } from 'expo-camera';
-import { Image, SafeAreaView, ScrollView, TextInput, View } from 'react-native';
+import { Image, SafeAreaView, ScrollView, TextInput, TouchableOpacity, View, Text } from 'react-native';
 import { captureRef } from 'react-native-view-shot'
 import * as Sharing from 'expo-sharing'
 
@@ -87,6 +87,14 @@ export function Home() {
           onChangePosition={setPositionSelected}
           positionSelected={positionSelected}
         />
+
+
+        {/* Adicionando a posibiliade de uma nova foto */}
+        <TouchableOpacity onPress={() => setPhotoURI(null)}>
+            <Text style={styles.retry}>
+              Nova foto
+            </Text>
+        </TouchableOpacity>
 
         <Button title="Compartilhar" onPress={handleTakePicture} />
       </ScrollView>

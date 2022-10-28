@@ -34,5 +34,12 @@ export const styles = StyleSheet.create({
   },
   sticker: {
     backgroundColor: '#373D98',
-  }
+  },
+  retry: {
+    color: '#fff',
+    fontWeight: 'bold',
+    alignSelf: 'center',
+    marginTop: 20,
+    marginBottom: 10
+  },
 });
