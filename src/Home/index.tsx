@@ -27,6 +27,10 @@ export function Home() {
     setPhotoURI(photo.uri)
   }
 
+  async function shareScreenShot(){
+
+  }
+
   useEffect(() => {
     // Solicitando ao usuário a permissão para utilizar a câmera
     Camera.requestCameraPermissionsAsync()
@@ -46,15 +50,19 @@ export function Home() {
           <View style={styles.picture}>
 
             {
-              // CASO hasCameraPermission seja true = <Camera /> e caso não haja uma foto salva no estado
-              hasCameraPermission  && !photoURI ? 
+              // CASO hasCameraPermission seja true = <Camera /> OU caso não haja uma foto salva no estado
+              hasCameraPermission  || !photoURI ? 
                 <Camera 
                   ref={cameraRef}
                   style={styles.camera}
                   type={CameraType.front} 
                 /> : 
               // Caso não tenha a permissão (False) do uso da câmera será utilizada uma imagem default
-              <Image source={{ uri: photoURI ? photoURI : 'https://images.gutefrage.net/media/fragen/bilder/meine-kamera-auf-windows-10-funktioniert-nicht-was-tun/0_big.jpg?v=1584606917000' }} style={styles.camera} />
+              <Image 
+                source={{ uri: photoURI ? photoURI : 'https://images.gutefrage.net/media/fragen/bilder/meine-kamera-auf-windows-10-funktioniert-nicht-was-tun/0_big.jpg?v=1584606917000' }} 
+                style={styles.camera} 
+                onLoad={shareScreenShot}
+                />
             }
 
             <View style={styles.player}>
