@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
     paddingTop: 24
   },
   scroll: {
-    paddingBottom: 50
+    paddingBottom: 150
   },
   picture: {
     backgroundColor: '#FFF',
